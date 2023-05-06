@@ -34,15 +34,16 @@ const genCode = function(table,num) {
 async function setup() {
 	await db.query(`
 		CREATE TABLE IF NOT EXISTS links (
-			id		VARCHAR(8) PRIMARY KEY,
+			id		SERIAL PRIMARY KEY,
+			hid 	TEXT,
 			url 	TEXT NOT NULL,
 			name 	TEXT
 		);
 
-		CREATE TABLE IF NOT EXISTS users (
-			id 			SERIAL PRIMARY KEY,
-			name 		TEXT,
-			password 	TEXT
+		CREATE TABLE OF NOT EXISTS tokens (
+			id 		SERIAL PRIMARY KEY,
+			label	TEXT,
+			token	TEXT
 		);
 
 		CREATE TABLE IF NOT EXISTS stats (
@@ -54,9 +55,9 @@ async function setup() {
 }
 
 async function userAuth(req, res, next) {
-	var user = (req.cookies.user ? JSON.parse(req.cookies.user) : {username: req.body.username, pass: req.body.pass});
+	var user = req.cookies.user ?? { token: req.cookies.token ?? req.headers.authorization };
 	try {
-		const q = await db.query(`SELECT * FROM users WHERE name = $1 AND password = $2`,[user.username, user.pass]);
+		const q = await db.query(`SELECT * FROM tokens WHERE token = $1`,[user.token]);
 		if(q.rows[0]) {
 			req.verified = true;
 		} else {
@@ -215,7 +216,7 @@ app.post("/login", async (req, res) => {
 		res.send({status: "INVALID LOGIN."})
 		return;
 	}
-	res.cookie('user', JSON.stringify({username: req.body.username, pass: req.body.pass}), {expires: new Date("1/1/2030")});
+	res.cookie('user', JSON.stringify({ token: req.headers.authorization }), {expires: new Date("1/1/2030")});
 	res.send({status: 'OK'});
 })
 
