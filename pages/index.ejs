@@ -1,0 +1,37 @@
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="/styles/main.css" />
+</head>
+<body>
+	<div class="container">
+	<%if(logged_in){%>
+		<div class="link">
+			<form action="link" method="post">
+				<input type="text" name="link" placeholder="link"/>
+				<input type="text" name="name" placeholder="name" />
+				<input type="text" name="id" placeholder="custom id" />
+				<button type="submit">submit</button>
+			</form>
+		</div>
+		<% links.forEach(link => { %>
+				<div class = "link">
+					<a href=<%=url+link.id %>><%=link.name%></a>
+					<p>clicks: <%=stats[link.id] ? stats[link.id].count : 0%></p>
+					<form action="/unlink" method="post">
+					<input type="hidden" name="link" value=<%=""+link.id%> />
+					<button type="submit">delete</button>
+					</form>
+				</div>
+		<% }) %>
+	<%} else {%>
+		<form action="/login" method="post">
+			<input type="text" name="username" placeholder="username"/>
+			<br/>
+			<input type="password" name="pass" placeholder="password"/>
+			<br/>
+			<button type="submit">log in</button>
+		</form>
+		<p>(This site is a personal use site created by the Grey Skies as a way to share shorter links. If you'd like to look at the code, you can do so <a href="https://github.com/greysdawn/linkcutter">here</a>.)</p>
+	<%}%>
+	</div>
+</body>
