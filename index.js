@@ -32,33 +32,17 @@ const genCode = function(table,num) {
 }
 
 async function setup() {
-	await db.query(`
-		CREATE TABLE IF NOT EXISTS links (
-			id		SERIAL PRIMARY KEY,
-			hid 	TEXT,
-			url 	TEXT NOT NULL,
-			name 	TEXT
-		);
+	const { db, stores } = await require('./stores/__db')();
 
-		CREATE TABLE OF NOT EXISTS tokens (
-			id 		SERIAL PRIMARY KEY,
-			label	TEXT,
-			token	TEXT
-		);
-
-		CREATE TABLE IF NOT EXISTS stats (
-			id 			SERIAL PRIMARY KEY,
-			lid 		TEXT references links(id) on delete cascade,
-			date 		DATE
-		);
-	`)
+	app.db = db;
+	app.stores = stores;
 }
 
 async function userAuth(req, res, next) {
-	var user = req.cookies.user ?? { token: req.cookies.token ?? req.headers.authorization };
+	var user = req.cookies.user ? JSON.parse(req.cookies.user) : { token: req.headers.authorization ?? req.body.token };
 	try {
 		const q = await db.query(`SELECT * FROM tokens WHERE token = $1`,[user.token]);
-		if(q.rows[0]) {
+		if(q.rows?.[0]) {
 			req.verified = true;
 		} else {
 			req.verified = false;
@@ -84,9 +68,9 @@ async function getLink(link) {
 	}
 }
 
-async function getLinkID(id) {
+async function getLinkID(hid) {
 	try {
-		var data = await db.query(`SELECT * FROM links WHERE id = $1`,[id]);
+		var data = await db.query(`SELECT * FROM links WHERE hid = $1`,[hid]);
 		if(data.rows[0]) {
 			return data.rows[0];
 		} else {
@@ -109,19 +93,18 @@ async function getLinks() {
 	}
 }
 
-async function createLink(link, name, id) {
+async function createLink(link, name, hid) {
 	var exists = await getLink(link);
-	if(exists) return res({status:'EXISTS', link: URL+exists.id});
-	if(id) exists = await getLinkID(id);
-	if(exists) res({status:'EXISTS', link: URL+exists.id});
+	if(exists) return res({status:'EXISTS', link: URL+exists.hid});
+	if(hid) exists = await getLinkID(hid);
+	if(exists) res({status:'EXISTS', link: URL+exists.hid});
 	
 	var code;
-	if(id) code = id;
+	if(hid) code = hid;
 	else code = genCode(process.env.CHARS);
-	console.log(code);
 
 	try {
-		await db.query(`INSERT INTO links (id, url, name) VALUES ($1, $2, $3)`,[code, link, name]);
+		await db.query(`INSERT INTO links (hid, url, name) VALUES ($1, $2, $3)`,[code, link, name]);
 
 		return {status: "OK", link: URL+code};
 	} catch(err) {
@@ -135,7 +118,7 @@ async function deleteLink(id) {
 	if(!exists) return {status:'DOES NOT EXIST'};
 
 	try {
-		await db.query(`DELETE FROM links WHERE id = $1`,[id]);
+		await db.query(`DELETE FROM links WHERE hid = $1`,[hid]);
 		return {status: "OK"};
 	} catch(err) {
 		console.log(err);
@@ -216,12 +199,15 @@ app.post("/login", async (req, res) => {
 		res.send({status: "INVALID LOGIN."})
 		return;
 	}
-	res.cookie('user', JSON.stringify({ token: req.headers.authorization }), {expires: new Date("1/1/2030")});
+	res.cookie('user', JSON.stringify({ token: req.headers.authorization ?? req.body.token }), {expires: new Date("1/1/2030")});
 	res.send({status: 'OK'});
 })
 
 setup()
-.then(() => app.listen(process.env.PORT || 8080));
+.then(() => {
+	app.listen(process.env.PORT || 8080);
+	console.log('app started');
+});
 
 process.on('SIGINT',() => {
 	db.end(()=>{
