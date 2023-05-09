@@ -6,26 +6,26 @@
 	<div class="container">
 	<%if(logged_in){%>
 		<div class="link">
-			<form action="link" method="post">
-				<input type="text" name="link" placeholder="link"/>
-				<input type="text" name="name" placeholder="name" />
-				<input type="text" name="id" placeholder="custom id" />
+			<form action="/api/links" method="post">
+				<input id="link" type="text" name="link" placeholder="link"/>
+				<input id="name" type="text" name="name" placeholder="name" />
+				<input id="hid" type="text" name="hid" placeholder="custom id" />
 				<button type="submit">submit</button>
 			</form>
 		</div>
 		<% links.forEach(link => { %>
 				<div class = "link">
-					<a href=<%=url+link.id %>><%=link.name%></a>
-					<p>clicks: <%=stats[link.id] ? stats[link.id].count : 0%></p>
-					<form action="/unlink" method="post">
-					<input type="hidden" name="link" value=<%=""+link.id%> />
+					<a href=<%=url+link.hid %>><%=link.name%></a>
+					<p>clicks: <%=stats[link.hid] ? stats[link.hid].count : 0%></p>
+					<form action="/api/link/<%=link.hid%>" method="delete">
+					<input type="hidden" name="link" value=<%=""+link.hid%> />
 					<button type="submit">delete</button>
 					</form>
 				</div>
 		<% }) %>
 	<%} else {%>
 		<form action="/login" method="post">
-			<input type="text" name="token" placeholder="token"/>
+			<input id="token" type="text" name="token" placeholder="token"/>
 			<br/>
 			<button type="submit">log in</button>
 		</form>

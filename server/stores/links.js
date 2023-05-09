@@ -64,6 +64,21 @@ class LinkStore extends DataStore {
 			return Promise.rejet(e);
 		}
 
+		console.log(d.rows)
+		if(d.rows?.[0]) return new Link(this, KEYS, d.rows[0]);
+		else return new Link(this, KEYS, { });
+	}
+
+	async getUrl(url) {
+		try {
+			var d = await this.db.query(`
+				select * from links where url = $1
+			`, [url]);
+		} catch(e) {
+			console.log(e);
+			return Promise.rejet(e);
+		}
+
 		if(d.rows?.[0]) return new Link(this, KEYS, d.rows[0]);
 		else return new Link(this, KEYS, { });
 	}
@@ -79,7 +94,7 @@ class LinkStore extends DataStore {
 		}
 
 		if(d.rows?.[0]) return d.rows.map(x => new Link(this, KEYS, x));
-		else return undefined;
+		else return [];
 	}
 
 	async getID(id) {

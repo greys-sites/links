@@ -13,6 +13,5 @@ module.exports = async () => {
 		if(stores[n].init) await stores[n].init();
 	}
 
-	for(var x in stores) { console.log(x.stores) };
 	return { db, stores };
 }

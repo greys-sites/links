@@ -30,11 +30,12 @@ form {
 	align-items: center;
 	justify-content: center;
 	margin: 0;
+	width: 100%;
 	max-width: 100%;
 }
 
 input {
-	max-width: 70%;
+	max-width: 90%;
 }
 
 button {
@@ -89,4 +90,10 @@ a {
 
 a:hover {
 	text-decoration: underline;
+}
+
+@media(max-width: 700px) {
+	form {
+		flex-direction: column;
+	}
 }

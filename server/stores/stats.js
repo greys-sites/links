@@ -78,16 +78,16 @@ class StatStore extends DataStore {
 
 		if(d.rows?.[0]) {
 			var stats = { };
-			for(var stat of stats) {
+			for(var stat of d.rows) {
 				if(!stats[stat.lid]) stats[stat.lid] = { count: 0, dates: { } };
 				if(!stats[stat.lid].dates[stat.date]) stats[stat.lid].dates[stat.date] = 0;
-				stats[stats.lid].dates[stat.date] += 1;
-				stats[stats.lid].count += 1;
+				stats[stat.lid].dates[stat.date] += 1;
+				stats[stat.lid].count += 1;
 			}
 			
 			console.log(stats);
 			return stats;
-		} else return undefined;
+		} else return {};
 	}
 
 	async getID(id) {
