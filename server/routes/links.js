@@ -36,5 +36,5 @@ module.exports = (app) => {
 		res.status(204).send();
 	})
 
-	app.use('/api/links', router);
+	app.use('/links', router);
 }

@@ -9,7 +9,7 @@
 		justify-content: flex-start;
 		padding-left: 10px;
 		margin: 0;
-		position: absolute;
+		position: sticky;
 		top: 0;
 		left: 0;
 	}

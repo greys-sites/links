@@ -23,7 +23,11 @@ class TokenStore extends DataStore {
 				id 		SERIAL PRIMARY KEY,
 				label	TEXT,
 				token	TEXT
-			)
+			);
+
+			create or replace function new_token() returns text as
+			'select substr(md5(random()::text), 0, 32);'
+			language SQL volatile;
 		`);
 	}
 
@@ -33,9 +37,9 @@ class TokenStore extends DataStore {
 				INSERT INTO tokens (
 					label,
 					token
-				) VALUES ($1, $2)
+				) VALUES ($1, new_token())
 				RETURNING id
-			`, [data.label, data.token]);
+			`, [data.label]);
 		} catch(e) {
 			console.log(e);
 			return Promise.reject(e);
@@ -49,6 +53,21 @@ class TokenStore extends DataStore {
 			var d = await this.db.query(`
 				select * from tokens where token = $1
 			`, [token]);
+		} catch(e) {
+			console.log(e);
+			return Promise.rejet(e);
+		}
+
+		if(d.rows?.[0]) return new Token(this, KEYS, d.rows[0]);
+		else return new Token(this, KEYS, { });
+	}
+
+	async getLabel(label
+) {
+		try {
+			var d = await this.db.query(`
+				select * from tokens where label = $1
+			`, [label]);
 		} catch(e) {
 			console.log(e);
 			return Promise.rejet(e);

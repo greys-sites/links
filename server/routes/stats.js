@@ -25,5 +25,5 @@ module.exports = (app) => {
 		res.status(204).send();
 	})
 
-	app.use('/api/stats', router);
+	app.use('/stats', router);
 }

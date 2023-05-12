@@ -1,14 +1,14 @@
 <h1>Important Links</h1>
-<a href="https://github.com/greysdawn">main github</a>
+<a href="https://github.com/greysdawn" target="_blank">main github</a>
 <br>
-<a href="https://twitter.com/greysdawn">projects twitter</a>
+<a href="https://twitter.com/greysdawn" target="_blank">projects twitter</a>
 <br>
-<a href="https://discord.gg/EvDmXGt">bot support server</a>
+<a href="https://discord.gg/EvDmXGt" target="_blank">bot support server</a>
 <br>
-<a href="https://discord.gg/3y228CvJyQ">content server</a>
+<a href="https://discord.gg/3y228CvJyQ" target="_blank">content server</a>
 <br>
-<a href="https://patreon.com/greysdawn">patreon</a>
+<a href="https://patreon.com/greysdawn" target="_blank">patreon</a>
 <br>
-<a href="https://ko-fi.com/greysdawn">ko-fi</a>
+<a href="https://ko-fi.com/greysdawn" target="_blank">ko-fi</a>
 <br>
-<a href="https://twitch.tv/greysdawn">twitch</a>
+<a href="https://twitch.tv/greysdawn" target="_blank">twitch</a>
