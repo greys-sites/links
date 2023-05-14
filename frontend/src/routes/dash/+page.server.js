@@ -36,15 +36,34 @@ export const actions = {
 	async create({ cookies, request }) {
 		var u = cookies.get('user');
 		var d = await request.formData();
+		var data = {
+			name: d.get('name'),
+			'url': d.get('url'),
+			hid: d.get('hid') ?? null
+		}
+
+		if(!data.name) return {
+			success: false,
+			action: 'create',
+			data: {
+				status: 400,
+				message: "Link name is required."
+			}
+		}
+
+		if(!data.url) return {
+			success: false,
+			action: 'create',
+			data: {
+				status: 400,
+				message: "Link URL is required."
+			}
+		}
+		
 		try {
-			var resp = await axios.post(`${API}/links`, {
+			var resp = await axios.post(`${API}/links`, data, {
 				headers: {
 					'Authorization': u
-				},
-				body: {
-					name: d.get('name'),
-					url: d.get('url'),
-					hid: d.get('hid')
 				}
 			})
 
@@ -64,19 +83,26 @@ export const actions = {
 		return { success: true, action: 'create', data: resp };
 	},
 
-	async delete({ cookies, request }) {
+	async del({ cookies, request }) {
 		var u = cookies.get('user');
+		console.log(u);
 		var d = await request.formData();
 		try {
-			var resp = await axios(`${API}/links/${d.get('hid')}`, {
-				method: 'DELETE',
+			var resp = await axios.delete(API + `/links/${d.get('hid')}`, {
 				headers: {
 					'Authorization': u
 				}
 			})
 		} catch(e) {
 			console.log(e);
-			throw fail(400, "Invalid link data.");
+			return {
+				success: false,
+				action: 'delete',
+				data: {
+					status: e.response.status,
+					message: e.response.data
+				}
+			}
 		}
 
 		return { success: true, action: 'delete', data: d.get('hid')};

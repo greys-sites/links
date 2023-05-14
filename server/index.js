@@ -13,16 +13,6 @@ app.use(userAuth);
 
 const URL = process.env.URL;
 
-const genCode = function(table = process.env.CHARS, num = 4) {
-	var str = "";
-	var ind = 0;
-	while (ind < num){
-		str += table[Math.floor(Math.random() * (table.length))];
-		ind += 1;
-	}
-	return str;
-}
-
 async function setup() {
 	const { db, stores } = await require('./stores/__db')();
 

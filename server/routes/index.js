@@ -7,5 +7,4 @@ module.exports = async (app) => {
 		console.log(n)
 		await require(`${__dirname}/${f}`)(app);
 	}
-	console.log(app)
 }

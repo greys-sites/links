@@ -1,5 +1,15 @@
 const router = require('express').Router();
 
+function genCode(table = process.env.CHARS, num = 4) {
+	var str = "";
+	var ind = 0;
+	while (ind < num){
+		str += table[Math.floor(Math.random() * (table.length))];
+		ind += 1;
+	}
+	return str;
+}
+
 module.exports = (app) => {
 	router.get('/', async (req, res) => {
 		if(!req.verified) {
@@ -12,7 +22,14 @@ module.exports = (app) => {
 
 	router.post('/', async (req,res) => {
 		if(!req.verified) return res.status(401).send();
-		var dat = await app.stores.links.create({url: req.body.link, name: req.body.name, hid: req.body.hid ?? genCode() });
+		var hid;
+		if(req.body.hid?.length) hid = req.body.hid;
+		else hid = genCode();
+		console.log(hid);
+		var dat = await app.stores.links.create({
+			url: req.body.url,
+			name: req.body.name, hid
+		});
 		res.status(200).send(dat);
 	})
 

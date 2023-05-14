@@ -64,7 +64,6 @@ class LinkStore extends DataStore {
 			return Promise.rejet(e);
 		}
 
-		console.log(d.rows)
 		if(d.rows?.[0]) return new Link(this, KEYS, d.rows[0]);
 		else return new Link(this, KEYS, { });
 	}
