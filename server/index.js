@@ -49,14 +49,14 @@ setup()
 });
 
 process.on('SIGINT',() => {
-	db.end(()=>{
+	app.db.end(()=>{
 		console.log("connection severed");
 		process.exit();
 	})
 })
 
 process.on('SIGTERM', () => {
-	db.end(()=>{
+	app.db.end(()=>{
 		console.log("connection severed");
 		process.exit();
 	})
