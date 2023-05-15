@@ -3,7 +3,13 @@
 	import Toast from '$lib/components/toast.svelte';
 </script>
 
-<nav><a href="/">home</a><p>|</p><a href="/links">links</a></nav>
+<nav>
+	<a href="/">home</a>
+	<p>|</p>
+	<a href="/links">links</a>
+	<p>|</p>
+	<a href="/dash">dash</a>
+</nav>
 
 <div class="toasts">
 	{#each $toasts as t (t.id)}
@@ -17,14 +23,13 @@
 
 <style>
 	nav {
-		background-color: #111;
-		height: 5vh;
+		background-color: rgba(255, 255, 255, .07);
 		width: 100%;
 		display: flex;
 		flex-direction: row;
 		align-items: center;
 		justify-content: flex-start;
-		padding-left: 10px;
+		padding-left: .5rem;
 		margin: 0;
 		position: sticky;
 		top: 0;
@@ -32,14 +37,14 @@
 	}
 
 	nav > * {
-		margin-right: 5px;
+		margin-right: .5rem;
 	}
 
 	.toasts {
 		position: fixed;
 		top: 0;
 		right: 0;
-		width: 20rem;
+		width: 18rem;
 		display: flex;
 		flex-direction: column-reverse;
 		align-items: center;

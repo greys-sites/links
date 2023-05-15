@@ -11,38 +11,35 @@ export let props = {
 }
 </script>
 
-<div class={props.type} transition:fly={{ x: 20, duration: 500 }}>
+<div class={props.type} transition:fly={{ x: 50, duration: 500 }}>
 <p>{props.message}</p>
-{#if props.canClose}<btn class="close" on:click={() => dismiss(props.id)}>X</btn>{/if}
+{#if props.canClose}<button class="close" on:click={() => dismiss(props.id)}>X</button>{/if}
 </div>
 
 <style>
 	div {
 		color: #eee;
-		border-radius: 10px;
-		text-align: center;
+		border-radius: .5rem;
+		text-align: left;
 		margin: auto;
 		margin-top: 10px;
-		width: 15rem;
-		height: 3rem;
+		width: 18rem;
+		padding: .5rem;
 		display: flex;
-		flex-direction: column;
+		flex-direction: row;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
 		position: relative;
 	}
 
 	.close {
-		position: absolute;
 		font-weight: bold;
-		top: 0;
-		right: 0;
 		color: white;
 		padding: .5rem .7rem;
 	}
 
 	div > p {
-		margin: auto;
+		margin: 0;
 	}
 
 	.success {

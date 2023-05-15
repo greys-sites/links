@@ -51,13 +51,12 @@ $: if(form) {
 
 <style>
   .link {
-    height: 2.5rem;
     width: 90%;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #aaa;
+    background-color: rgba(255, 255, 255, .09);
     border-radius: .5rem;
     color: black;
     margin: .7rem;
@@ -67,9 +66,14 @@ $: if(form) {
   .link p {
     color: var(--accent);
     font-weight: bold;
+    margin: 0;
   }
 
   .link form {
     width: unset;
+  }
+
+  .link button {
+  	margin: 0;
   }
 </style>

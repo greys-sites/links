@@ -1,5 +1,5 @@
 :root {
-	--accent: #9966cc;
+	--accent: #b794f6;
 }
 
 * {
@@ -12,7 +12,7 @@ html, body {
 }
 
 body {
-	background-color: #202020;
+	background-color: #121212;
 	margin: 0;
 	/* padding-top: 6vh; */
 	font-family: Roboto;
@@ -20,11 +20,11 @@ body {
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	color: #eee;
+	color: #fff;
 }
 
 .container {
-	background-color: #333;
+	background-color: rgba(255, 255, 255, .07);
 	width: 90%;
 	margin: auto;
 	margin-top: 1vh;
@@ -39,6 +39,11 @@ body {
 
 .container p {
 	width: 70%;
+	opacity: .8;
+}
+
+.container h1 {
+	opacity: .8;
 }
 
 form {
@@ -52,31 +57,36 @@ form {
 }
 
 input {
-	max-width: 90%;
+	margin: 0;
 }
 
-button {
-	width: calc(50px + 5vmin);
-    height: 50px;
+input[type=text] {
+	max-width: 90%;
+	background-color: rgba(255, 255, 255, .09);
+	/* border: 2px solid #121212; */
+	border: 0px;
+	border-radius: .5rem;
+	padding: .5rem;
+	color: white;
+	margin-right: .5rem;
+}
+
+button, input[type=submit] {
     text-transform: uppercase;
     font-weight: bold;
-    background-color: inherit;
+    background-color: rgba(255, 255, 255, .09);
+    border-radius: .5rem;
     color: white;
     box-shadow: none;
     text-shadow: none;
-    border-radius: 2px;
-    border-style: solid;
-    border-radius: 10px;
-    border-color: #aa55aa;
-    margin: 10px;
+    border-style: none; 
+    padding: .5rem .7rem;
     transition: .5s;
     text-align: center;
 }
 
 button:hover {
-    background-color: #aa55aa;
     color: black;
-    border-color: white;
     transition: .5s;
 }
 
@@ -97,5 +107,10 @@ a:hover {
 
 	.container p {
 		width: 100%;
+	}
+
+	input[type=text] {
+		margin-right: 0;
+		margin-bottom: .5rem;
 	}
 }
