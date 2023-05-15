@@ -1,26 +1,27 @@
 <script>
-import { goto } from '$app/navigation';
+import { add } from '$lib/stores/toasts';
+import { enhance } from '$app/forms';
 export let form;
 
-let err = null;
-if(form?.error) {
-	err = form.error;
-	setTimeout(() => err = null, 10000);
+$: console.log(form);
+$: if(form) {
+  switch(form.success) {
+    case false:
+      add({
+        type: 'error',
+        message: `${form.status}: ${form.message}`,
+        timeout: 5000,
+        canClose: true
+      })
+      break;
+    default:
+      break;
+  }
 }
 </script>
 
-<style>
-.error {
-	color: red;
-	background-color: #111;
-}
-</style>
-
 <div class="container">
-{#if err}
-	<p class="error">{err}</p>
-{/if}
-<form method="POST">
+<form method="POST" action="?/login" use:enhance>
 	<input type="text" placeholder="token" name="token" />
 	<input type="submit" value="submit" />
 </form>

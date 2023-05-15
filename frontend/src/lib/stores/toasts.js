@@ -1,9 +1,12 @@
 import { writable } from 'svelte/store';
 
-const toasts = writeable([]);
+export const toasts = writable([]);
 
 export const dismiss = (id) => {
-	toasts.update(ts => ts.filter(t => t.id != id));
+	toasts.update(ts => {
+		console.log(ts);
+		return ts.filter(t => t.id != id)
+	});
 }
 
 export const add = (data = {
@@ -12,8 +15,11 @@ export const add = (data = {
 	message: "This is a toast :)",
 	type: "success"
 }) => {
-	const id = Math.floor(Math.random() * 1000));
+	const id = Math.floor(Math.random() * 1000);
 
-	toasts.update(ts => ts.push({ id, ...data }))
+	toasts.update((ts) => {
+		console.log(ts);
+		return [...ts, { id, ...data }];
+	})
 	if(data.timeout) setTimeout(() => dismiss(id), data.timeout);
 }

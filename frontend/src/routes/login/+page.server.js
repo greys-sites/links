@@ -1,6 +1,6 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { goto } from '$app/navigation';
-import * as axios from 'axios';
+import axios from 'axios';
 import { API } from '$env/static/private';
 
 export function load({ cookies }) {
@@ -9,8 +9,9 @@ export function load({ cookies }) {
 }
 
 export const actions = {
-	default: async ({ cookies, request }) => {
+	async login({ cookies, request }) {
 		var d = await request.formData();
+		console.log(d);
 		var tk = d.get('token');
 
 		try {
@@ -28,7 +29,9 @@ export const actions = {
 		} catch(e) {
 			console.log(e);
 			return fail(401, {
-				error: "Token is incorrect."
+				success: false,
+				status: 401,
+				message: "Token is incorrect."
 			});
 		}
 	}

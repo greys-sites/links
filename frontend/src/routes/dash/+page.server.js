@@ -1,10 +1,9 @@
 import { redirect, fail } from '@sveltejs/kit';
-import * as axios from 'axios';
+import axios from 'axios';
 import { API } from '$env/static/private';
 
 export async function load({ cookies }) {
 	var u = cookies.get('user');
-	console.log('user 2: ' + u);
 	if(!u) throw redirect(308, '/login');
 
 	var d;
@@ -16,8 +15,8 @@ export async function load({ cookies }) {
 		})
 		d = d.data;
 	} catch(e) {
-		console.log(e.response);
-		switch(e.response.status) {
+		console.log(e.response ?? e);
+		switch(e.response?.status) {
 			case 401:
 				cookies.delete('user');
 				d = { links: [] };
@@ -28,7 +27,6 @@ export async function load({ cookies }) {
 		}
 	}
 
-	console.log(d);
 	return { links: d };
 }
 
@@ -42,23 +40,19 @@ export const actions = {
 			hid: d.get('hid') ?? null
 		}
 
-		if(!data.name) return {
+		if(!data.name) return fail(400, {
 			success: false,
 			action: 'create',
-			data: {
-				status: 400,
-				message: "Link name is required."
-			}
-		}
+			status: 400,
+			message: "Link name is required."
+		});
 
-		if(!data.url) return {
+		if(!data.url) return fail(400, {
 			success: false,
 			action: 'create',
-			data: {
-				status: 400,
-				message: "Link URL is required."
-			}
-		}
+			status: 400,
+			message: "Link URL is required."
+		});
 		
 		try {
 			var resp = await axios.post(`${API}/links`, data, {
@@ -70,14 +64,12 @@ export const actions = {
 			resp = resp.data;
 		} catch(e) {
 			console.log(e);
-			return {
-				success: false,
+			return fail(500, {
+				// success: false,
 				action: 'create',
-				data: {
-					status: e.response.status,
-					message: e.response.data
-				}
-			}
+				status: e.response?.status ?? 500,
+				message: e.response?.data || "Internal error"
+			})
 		}
 
 		return { success: true, action: 'create', data: resp };
@@ -85,7 +77,6 @@ export const actions = {
 
 	async del({ cookies, request }) {
 		var u = cookies.get('user');
-		console.log(u);
 		var d = await request.formData();
 		try {
 			var resp = await axios.delete(API + `/links/${d.get('hid')}`, {
