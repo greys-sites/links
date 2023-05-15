@@ -1,3 +1,4 @@
+<div class="container">
 <h1>Important Links</h1>
 <a href="https://github.com/greysdawn" target="_blank">main github</a>
 <br>
@@ -12,3 +13,4 @@
 <a href="https://ko-fi.com/greysdawn" target="_blank">ko-fi</a>
 <br>
 <a href="https://twitch.tv/greysdawn" target="_blank">twitch</a>
+</div>
