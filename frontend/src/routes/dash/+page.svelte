@@ -20,7 +20,7 @@ $: if(form) {
     case false:
       add({
         type: 'error',
-        message: `${form.status}: ${form.message}`,
+        message: `Error: ${form.message}`,
         timeout: 5000,
         canClose: true
       })
@@ -39,8 +39,8 @@ $: if(form) {
   </form>
   {#each data.links as d}
   	<div class="link">
-    	<a href="/{d.hid}">{d.hid}</a>
-      <a href="{d.url}">{d.name}</a>
+    	<a href="/{d.hid}" target="_blank">{d.hid}</a>
+      <a href="{d.url}" target="_blank">{d.name}</a>
     	<form method="POST" action="?/del" use:enhance>
 	    	<input type="text" value="{d.hid}" name="hid" hidden />
 	    	<input type="submit" value="delete" />
