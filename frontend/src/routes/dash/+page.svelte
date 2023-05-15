@@ -39,7 +39,8 @@ $: if(form) {
   </form>
   {#each data.links as d}
   	<div class="link">
-    	<a href="{d.url}">{d.name}</a>
+    	<a href="/{d.hid}">{d.hid}</a>
+      <a href="{d.url}">{d.name}</a>
     	<form method="POST" action="?/del" use:enhance>
 	    	<input type="text" value="{d.hid}" name="hid" hidden />
 	    	<input type="submit" value="delete" />
@@ -47,3 +48,28 @@ $: if(form) {
     </div>
   {/each}
 </div>
+
+<style>
+  .link {
+    height: 2.5rem;
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #aaa;
+    border-radius: .5rem;
+    color: black;
+    margin: .7rem;
+    padding: .5rem;
+  }
+
+  .link p {
+    color: var(--accent);
+    font-weight: bold;
+  }
+
+  .link form {
+    width: unset;
+  }
+</style>

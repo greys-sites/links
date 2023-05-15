@@ -20,6 +20,13 @@ module.exports = (app) => {
 		}
 	});
 
+	router.get('/:id', async (req, res) => {
+		var hid = req.params.id;
+		var link = await app.stores.links.get(hid);
+		if(link) res.send(link);
+		else res.status(404).send();
+	});
+
 	router.post('/', async (req,res) => {
 		if(!req.verified) return res.status(401).send();
 		var hid;

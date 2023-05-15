@@ -9,8 +9,4 @@
 
 <h1>Oh, okay. Anything else I should know?</h1>
 <p>You can check out some of our important links on <a href="/links">this page</a>!</p>
-<h1>t</h1>
-<h1>e</h1>
-<h1>s</h1>
-<h1>t</h1>
 </div>
