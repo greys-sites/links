@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Home | gsdn.link</title>
+</svelte:head>
+
 <div class="container">
 <h1>owo what's this?</h1>
 <p>Hiya! You've found the main page for the <a href="https://github.com/greys-sites/links">link shortening site</a>
