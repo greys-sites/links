@@ -1,3 +1,7 @@
+<svelte:head>
+  <title>Links | gsdn.link</title>
+</svelte:head>
+
 <div class="container">
 <h1>Important Links</h1>
 <a href="https://github.com/greysdawn" target="_blank">main github</a>

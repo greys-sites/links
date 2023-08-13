@@ -20,6 +20,10 @@ $: if(form) {
 }
 </script>
 
+<svelte:head>
+  <title>Login | gsdn.link</title>
+</svelte:head>
+
 <div class="container">
 <form method="POST" action="?/login" use:enhance>
 	<input type="text" placeholder="token" name="token" />

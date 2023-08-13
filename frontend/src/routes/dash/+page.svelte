@@ -30,6 +30,10 @@ $: if(form) {
 
 </script>
 
+<svelte:head>
+  <title>Dash | gsdn.link</title>
+</svelte:head>
+
 <div class="container">
   <form method="POST" action="?/create" use:enhance>
     <input type="text" placeholder="name" name="name" />
