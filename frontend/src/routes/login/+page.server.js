@@ -3,13 +3,16 @@ import { goto } from '$app/navigation';
 import axios from 'axios';
 import { API } from '$env/static/private';
 
+console.log(API);
+
 export function load({ cookies }) {
 	var u = cookies.get('user');
 	if(u) throw redirect(308, '/dash');
 }
 
 export const actions = {
-	async login({ cookies, request }) {
+	login: async ({ cookies, request }) => {
+		console.log(request)
 		var d = await request.formData();
 		console.log(d);
 		var tk = d.get('token');

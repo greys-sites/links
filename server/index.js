@@ -44,8 +44,8 @@ app.get("/", async (req, res) => {
 
 setup()
 .then(() => {
-	app.listen(process.env.PORT || 8080);
-	console.log('app started');
+	app.listen(process.env.BACK_PORT || 8080);
+	console.log(`Listening on port ${process.env.BACK_PORT}`);
 });
 
 process.on('SIGINT',() => {
