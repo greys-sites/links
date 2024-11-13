@@ -1,19 +1,14 @@
 import { redirect, fail } from '@sveltejs/kit';
-import axios from 'axios';
-import { API } from '$env/static/private';
 
-export async function load({ cookies }) {
-	var u = cookies.get('user');
-	if(!u) throw redirect(308, '/login');
+export async function load({ cookies, locals }) {
+	if(!locals.verified) {
+		cookies.delete('user', { path: "/" });
+		throw redirect(308, '/login');
+	}
 
 	var d;
 	try {
-		d = await axios.get(API + '/links', {
-			headers: {
-				'Authorization': u
-			}
-		})
-		d = d.data;
+		d = await Links.getAll();
 	} catch(e) {
 		console.log(e.response ?? e);
 		switch(e.response?.status) {
@@ -31,8 +26,14 @@ export async function load({ cookies }) {
 }
 
 export const actions = {
-	async create({ cookies, request }) {
-		var u = cookies.get('user');
+	async create({ cookies, request, locals }) {
+		if(!locals.verified) return fail(401, {
+			success: false,
+			action: 'create',
+			status: 400,
+			message: 'Unauthorized.'
+		});
+
 		var d = await request.formData();
 		var data = {
 			name: d.get('name'),
@@ -55,35 +56,34 @@ export const actions = {
 		});
 		
 		try {
-			var resp = await axios.post(`${API}/links`, data, {
-				headers: {
-					'Authorization': u
-				}
-			})
-
-			resp = resp.data;
+			var created = Links.create(data)
 		} catch(e) {
 			console.log(e);
 			return fail(500, {
-				// success: false,
+				success: false,
 				action: 'create',
 				status: e.response?.status ?? 500,
 				message: e.response?.data || "Internal error"
 			})
 		}
 
-		return { success: true, action: 'create', data: resp };
+		return { success: true, action: 'create', data: created };
 	},
 
 	async del({ cookies, request }) {
-		var u = cookies.get('user');
+		if(!locals.verified) return fail(401, {
+			success: false,
+			action: 'create',
+			status: 400,
+			message: 'Unauthorized.'
+		});
+
 		var d = await request.formData();
+		var hid = d.get('hid');
+
 		try {
-			var resp = await axios.delete(API + `/links/${d.get('hid')}`, {
-				headers: {
-					'Authorization': u
-				}
-			})
+			var link = await Links.get(hid);
+			if(link?.id) await link.delete();
 		} catch(e) {
 			console.log(e);
 			return {
@@ -96,6 +96,6 @@ export const actions = {
 			}
 		}
 
-		return { success: true, action: 'delete', data: d.get('hid')};
+		return { success: true, action: 'delete', data: hid };
 	}
 }

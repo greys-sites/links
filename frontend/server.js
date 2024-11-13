@@ -9,4 +9,3 @@ const PORT = process.env.FRONT_PORT ?? 3000;
 app.use(handler);
 app.listen(PORT);
 console.log(`Listening on port ${PORT}`);
-console.log('API: ' + process.env.API);

@@ -1,13 +1,13 @@
 import { error, redirect } from '@sveltejs/kit';
-import axios from 'axios';
-import { API } from '$env/static/private';
+
+import Links from '$lib/data/links';
 
 export async function load({ cookies, params }) {
 	var hid = params.hid;
 
 	try {
-		var req = await axios.get(`${API}/links/${hid}`);
-		req = req.data;
+		var link = await Links.get(hid);
+		var req = link;
 	} catch(e) {
 		console.log(e.response?.data ?? e);
 		throw error(e.response?.status ?? 500, {
@@ -17,5 +17,5 @@ export async function load({ cookies, params }) {
 
 	console.log(req);
 	if(req?.url) throw redirect(308, req.url);
-	else throw error(404, "Link not found");
+	else throw error(404, "Link not found.");
 }

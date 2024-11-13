@@ -1,9 +1,7 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { goto } from '$app/navigation';
-import axios from 'axios';
-import { API } from '$env/static/private';
 
-console.log(API);
+import Tokens from '$lib/data/tokens';
 
 export function load({ cookies }) {
 	var u = cookies.get('user');
@@ -12,19 +10,13 @@ export function load({ cookies }) {
 
 export const actions = {
 	login: async ({ cookies, request }) => {
-		console.log(request)
 		var d = await request.formData();
-		console.log(d);
 		var tk = d.get('token');
 
 		try {
-			var u = await axios.get(API + '/users', {
-				headers: {
-					'Authorization': tk
-				}
-			});
+			var u = Tokens.get(tk);
 
-			if(u) {
+			if(u?.id) {
 				cookies.set('user', tk);
 			} else return fail(401, {
 				error: "Token is incorrect."
