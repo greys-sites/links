@@ -1,23 +1,25 @@
 <script>
-import { add } from '$lib/stores/toasts';
-import { enhance } from '$app/forms';
-export let form;
+  import { add } from '$lib/stores/toasts';
+  import { enhance } from '$app/forms';
+  /** @type {{form: any}} */
+  let { form } = $props();
 
-$: console.log(form);
-$: if(form) {
-  switch(form.success) {
-    case false:
-      add({
-        type: 'error',
-        message: `${form.status}: ${form.message}`,
-        timeout: 5000,
-        canClose: true
-      })
-      break;
-    default:
-      break;
-  }
-}
+  $effect(() => {
+    if(form) {
+      switch(form.success) {
+        case false:
+          add({
+            type: 'error',
+            message: `${form.status}: ${form.message}`,
+            timeout: 5000,
+            canClose: true
+          })
+          break;
+        default:
+          break;
+      }
+    }
+  });
 </script>
 
 <svelte:head>

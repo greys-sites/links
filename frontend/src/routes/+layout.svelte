@@ -1,6 +1,8 @@
 <script>
 	import { toasts } from '$lib/stores/toasts';
 	import Toast from '$lib/components/toast.svelte';
+	/** @type {{children?: import('svelte').Snippet}} */
+	let { children } = $props();
 </script>
 
 <nav>
@@ -19,7 +21,7 @@
 	{/each}
 </div>
 
-<slot />
+{@render children?.()}
 
 <style>
 	nav {

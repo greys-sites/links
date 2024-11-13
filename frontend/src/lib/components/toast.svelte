@@ -1,19 +1,20 @@
 <script>
-import { dismiss } from '$lib/stores/toasts';
-import { fly } from 'svelte/transition';
+	import { dismiss } from '$lib/stores/toasts';
+	import { fly } from 'svelte/transition';
 
-export let props = {
-	id: 0,
-	type: "success",
-	canClose: true,
-	timeout: 5000,
-	message: "This is a toast :)"
-}
+	/** @type {{props?: any}} */
+	let { props = {
+		id: 0,
+		type: "success",
+		canClose: true,
+		timeout: 5000,
+		message: "This is a toast :)"
+	} } = $props();
 </script>
 
 <div class={props.type} transition:fly|global={{ x: 50, duration: 500 }}>
 <p>{props.message}</p>
-{#if props.canClose}<button class="close" on:click={() => dismiss(props.id)}>X</button>{/if}
+{#if props.canClose}<button class="close" onclick={() => dismiss(props.id)}>X</button>{/if}
 </div>
 
 <style>

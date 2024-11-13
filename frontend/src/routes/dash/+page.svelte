@@ -1,32 +1,38 @@
 <script>
+  import { run } from 'svelte/legacy';
+
 import { add } from '$lib/stores/toasts';
 import { enhance } from '$app/forms';
 import Toast from '$lib/components/toast.svelte';
 
-export let form;
-export let data;
+  /** @type {{form: any, data: any}} */
+  let { form, data } = $props();
 
-$: console.log(form);
-$: if(form) {
-  switch(form.success) {
-    case true:
-      add({
-        type: 'success',
-        message: `Link ${form.action}d!`,
-        timeout: 5000,
-        canClose: true
-      })
-      break;
-    case false:
-      add({
-        type: 'error',
-        message: `Error: ${form.message}`,
-        timeout: 5000,
-        canClose: true
-      })
-      break;
+run(() => {
+    console.log(form);
+  });
+run(() => {
+    if(form) {
+    switch(form.success) {
+      case true:
+        add({
+          type: 'success',
+          message: `Link ${form.action}d!`,
+          timeout: 5000,
+          canClose: true
+        })
+        break;
+      case false:
+        add({
+          type: 'error',
+          message: `Error: ${form.message}`,
+          timeout: 5000,
+          canClose: true
+        })
+        break;
+    }
   }
-}
+  });
 
 </script>
 
