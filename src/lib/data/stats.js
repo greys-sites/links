@@ -1,4 +1,5 @@
-const { DataStore, DataObject } = require('./__models');
+import { DataStore, DataObject } from './__models';
+import pool from './__db';
 
 const KEYS = {
 	id: { },
@@ -13,8 +14,8 @@ class Stats extends DataObject {
 }
 
 class StatStore extends DataStore {
-	constructor(db, stores) {
-		super(db, stores);
+	constructor(db) {
+		super(db);
 	}
 
 	async init() {
@@ -61,7 +62,6 @@ class StatStore extends DataStore {
 				if(!stats[stat.date]) stats[stat.date] = 0;
 				stats[stat.date] += 1;
 			}
-			console.log(stats);
 			return stats;
 		} else return {};
 	}
@@ -85,7 +85,6 @@ class StatStore extends DataStore {
 				stats[stat.lid].count += 1;
 			}
 			
-			console.log(stats);
 			return stats;
 		} else return {};
 	}
@@ -113,4 +112,7 @@ class StatStore extends DataStore {
 	}
 }
 
-module.exports = (db, stores) => new StatStore(db, stores);
+const stats = new StatStore(pool);
+await stats.init();
+
+export default stats;

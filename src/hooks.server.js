@@ -4,8 +4,14 @@ export async function handle({ event, resolve }) {
 	var tk = event.cookies.get('user');
 	if(!tk) tk = event.request.headers.get('authorization');
 
-	var grabbed = Tokens.get(tk);
-	if(grabbed?.id) event.locals.verified = true;
+	var grabbed = await Tokens.get(tk);
+
+	event.locals.verified = (
+		grabbed?.id ?
+		true :
+		false
+	)
+
 	const response = await resolve(event);
 	return response;
 }

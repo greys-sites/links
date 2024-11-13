@@ -3,9 +3,11 @@ import { goto } from '$app/navigation';
 
 import Tokens from '$lib/data/tokens';
 
-export function load({ cookies }) {
-	var u = cookies.get('user');
-	if(u) redirect(308, '/dash');
+export async function load({ cookies, locals }) {
+	if(locals.verified) redirect(308, '/dash');
+	else {
+		cookies.delete('user', { path: '/' });
+	}
 }
 
 export const actions = {
@@ -14,10 +16,14 @@ export const actions = {
 		var tk = d.get('token');
 
 		try {
-			var u = Tokens.get(tk);
+			var u = await Tokens.get(tk);
+			console.log(u);
 
 			if(u?.id) {
 				cookies.set('user', tk, { path: '/' });
+				return {
+					success: true
+				}
 			} else return fail(401, {
 				error: "Token is incorrect."
 			});
