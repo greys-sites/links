@@ -5,7 +5,7 @@ import Tokens from '$lib/data/tokens';
 
 export function load({ cookies }) {
 	var u = cookies.get('user');
-	if(u) throw redirect(308, '/dash');
+	if(u) redirect(308, '/dash');
 }
 
 export const actions = {
@@ -17,7 +17,7 @@ export const actions = {
 			var u = Tokens.get(tk);
 
 			if(u?.id) {
-				cookies.set('user', tk);
+				cookies.set('user', tk, { path: '/' });
 			} else return fail(401, {
 				error: "Token is incorrect."
 			});

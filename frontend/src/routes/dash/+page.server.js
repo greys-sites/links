@@ -3,7 +3,7 @@ import { redirect, fail } from '@sveltejs/kit';
 export async function load({ cookies, locals }) {
 	if(!locals.verified) {
 		cookies.delete('user', { path: "/" });
-		throw redirect(308, '/login');
+		redirect(308, '/login');
 	}
 
 	var d;
@@ -13,7 +13,7 @@ export async function load({ cookies, locals }) {
 		console.log(e.response ?? e);
 		switch(e.response?.status) {
 			case 401:
-				cookies.delete('user');
+				cookies.delete('user', { path: '/' });
 				d = { links: [] };
 				break;
 			default:
