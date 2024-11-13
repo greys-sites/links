@@ -11,7 +11,7 @@ export let props = {
 }
 </script>
 
-<div class={props.type} transition:fly={{ x: 50, duration: 500 }}>
+<div class={props.type} transition:fly|global={{ x: 50, duration: 500 }}>
 <p>{props.message}</p>
 {#if props.canClose}<button class="close" on:click={() => dismiss(props.id)}>X</button>{/if}
 </div>
