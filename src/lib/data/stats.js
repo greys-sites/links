@@ -19,13 +19,6 @@ class StatStore extends DataStore {
 	}
 
 	async init() {
-		await this.db.query(`
-			CREATE TABLE IF NOT EXISTS stats (
-				id 			SERIAL PRIMARY KEY,
-				lid 		TEXT references links(hid) on delete cascade,
-				date 		DATE
-			)
-		`);
 	}
 
 	async create(data = {}) {

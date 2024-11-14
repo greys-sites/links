@@ -1,0 +1,1 @@
+{"version":3,"file":"private-6e8140bb.js","sources":["../../../.svelte-kit/adapter-node/chunks/private.js"],"sourcesContent":["const API = \"http://localhost:5000\";\nexport {\n  API as A\n};\n"],"names":[],"mappings":"AAAK,MAAC,GAAG,GAAG;;;;"}

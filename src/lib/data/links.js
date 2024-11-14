@@ -29,14 +29,6 @@ class LinkStore extends DataStore {
 	}
 
 	async init() {
-		await this.db.query(`
-			CREATE TABLE IF NOT EXISTS links (
-				id		SERIAL PRIMARY KEY,
-				hid 	TEXT UNIQUE,
-				url		TEXT,
-				name 	TEXT
-			)
-		`)
 	}
 
 	async create(data = {}) {

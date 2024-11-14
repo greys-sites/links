@@ -1,6 +1,13 @@
 <script>
   import { add } from '$lib/stores/toasts';
   import { enhance } from '$app/forms';
+
+  import {
+  	Input,
+  	Label,
+  	Button
+  } from 'flowbite-svelte';
+ 
   /** @type {{form: any}} */
   let { form } = $props();
 
@@ -27,8 +34,9 @@
 </svelte:head>
 
 <div class="container">
-<form method="POST" action="?/login" use:enhance>
-	<input type="text" placeholder="token" name="token" />
-	<input type="submit" value="submit" />
-</form>
+	<form method="POST" action="?/login" use:enhance>
+		<Label for="token">Token</Label>
+		<Input type="text" placeholder="token" name="token" id="token" />
+		<Button type="submit">Submit</Button>
+	</form>
 </div>

@@ -12,7 +12,11 @@
 		"@sveltejs/adapter-node": "^2.0.0",
 		"@sveltejs/kit": "^2.5.27",
 		"@sveltejs/vite-plugin-svelte": "^4.0.0",
+		"autoprefixer": "^10.4.20",
+		"flowbite": "^2.5.2",
+		"flowbite-svelte": "^0.47.3",
 		"svelte": "^5.0.0",
+		"tailwindcss": "^3.4.9",
 		"vite": "^5.4.4"
 	},
 	"type": "module",

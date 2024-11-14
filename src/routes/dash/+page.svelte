@@ -1,38 +1,46 @@
 <script>
-  import { run } from 'svelte/legacy';
+ 	import { run } from 'svelte/legacy';
 
-import { add } from '$lib/stores/toasts';
-import { enhance } from '$app/forms';
-import Toast from '$lib/components/toast.svelte';
+	import { add } from '$lib/stores/toasts';
+	import { enhance } from '$app/forms';
+	import Toast from '$lib/components/toast.svelte';
 
-  /** @type {{form: any, data: any}} */
-  let { form, data } = $props();
+	import {
+		Input,
+		Textarea,
+		Button,
+		Modal,
+	} from 'flowbite-svelte';
 
-run(() => {
-    console.log(form);
-  });
-run(() => {
-    if(form) {
-    switch(form.success) {
-      case true:
-        add({
-          type: 'success',
-          message: `Link ${form.action}d!`,
-          timeout: 5000,
-          canClose: true
-        })
-        break;
-      case false:
-        add({
-          type: 'error',
-          message: `Error: ${form.message}`,
-          timeout: 5000,
-          canClose: true
-        })
-        break;
-    }
-  }
-  });
+	/** @type {{form: any, data: any}} */
+	let { form, data } = $props();
+
+	run(() => {
+	   console.log(form);
+	});
+	
+	run(() => {
+	    if(form) {
+		    switch(form.success) {
+		      case true:
+		        add({
+		          type: 'success',
+		          message: `Link ${form.action}d!`,
+		          timeout: 5000,
+		          canClose: true
+		        })
+		        break;
+		      case false:
+		        add({
+		          type: 'error',
+		          message: `Error: ${form.message}`,
+		          timeout: 5000,
+		          canClose: true
+		        })
+		        break;
+		    }
+		}
+	});
 
 </script>
 
@@ -42,10 +50,10 @@ run(() => {
 
 <div class="container">
   <form method="POST" action="?/create" use:enhance>
-    <input type="text" placeholder="name" name="name" />
-    <input type="text" placeholder="url" name="url" />
-    <input type="text" placeholder="custom ID" name="hid" />
-    <input type="submit" value="submit" />
+    <Input type="text" placeholder="name" name="name" />
+    <Input type="text" placeholder="url" name="url" />
+    <Input type="text" placeholder="custom ID" name="hid" />
+    <Button type="submit">Submit</Button>
   </form>
   {#each data.links as d}
   	<div class="link">

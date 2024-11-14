@@ -1,0 +1,1 @@
+import{w as i}from"./index.a7151f55.js";const e=i([]),a=t=>{e.update(o=>(console.log(o),o.filter(s=>s.id!=t)))},n=(t={timeout:5e3,canClose:!0,message:"This is a toast :)",type:"success"})=>{const o=Math.floor(Math.random()*1e3);e.update(s=>(console.log(s),[...s,{id:o,...t}])),t.timeout&&setTimeout(()=>a(o),t.timeout)};export{n as a,a as d,e as t};

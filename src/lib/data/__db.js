@@ -17,6 +17,19 @@ const pool = new pg.Pool({
 
 async function setup() {
 	await pool.query(`
+		CREATE TABLE IF NOT EXISTS links (
+			id		SERIAL PRIMARY KEY,
+			hid 	TEXT UNIQUE,
+			url		TEXT,
+			name 	TEXT
+		);
+
+		CREATE TABLE IF NOT EXISTS stats (
+			id 			SERIAL PRIMARY KEY,
+			lid 		TEXT references links(hid) on delete cascade,
+			date 		DATE
+		);
+		
 		CREATE OR REPLACE FUNCTION gen_hid() RETURNS TEXT AS $$
 			select string_agg(substr('abcdefghijklmnopqrstuvwxyz0123456789', ceil(random() * 36)::integer, 1), '') from generate_series(1, 5)
 		$$ LANGUAGE SQL VOLATILE;

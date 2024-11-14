@@ -1,4 +1,5 @@
 <script>
+	import "../app.css";
 	import { toasts } from '$lib/stores/toasts';
 	import Toast from '$lib/components/toast.svelte';
 	/** @type {{children?: import('svelte').Snippet}} */
@@ -15,9 +16,7 @@
 
 <div class="toasts">
 	{#each $toasts as t (t.id)}
-		<Toast
-			props={t}
-		/>
+		<Toast props="{t}"></Toast>
 	{/each}
 </div>
 
