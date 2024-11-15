@@ -44,6 +44,17 @@
 
 </script>
 
+{#snippet Link(hid, name, url)}
+	<div class="link">
+  	<a href="/{hid}" target="_blank">{hid}</a>
+    <a href="{url}" target="_blank">{name}</a>
+  	<form method="POST" action="?/del" use:enhance>
+    	<input type="text" value="{hid}" name="hid" hidden />
+    	<Button type="submit">Delete</Button>
+  	</form>
+  </div>
+{/snippet}
+
 <svelte:head>
   <title>Dash | gsdn.link</title>
 </svelte:head>
@@ -55,43 +66,27 @@
     <Input type="text" placeholder="custom ID" name="hid" />
     <Button type="submit">Submit</Button>
   </form>
-  {#each data.links as d}
-  	<div class="link">
-    	<a href="/{d.hid}" target="_blank">{d.hid}</a>
-      <a href="{d.url}" target="_blank">{d.name}</a>
-    	<form method="POST" action="?/del" use:enhance>
-	    	<input type="text" value="{d.hid}" name="hid" hidden />
-	    	<input type="submit" value="delete" />
-    	</form>
-    </div>
+  {#each data.links as link}
+  	{@render Link(link.hid, link.name, link.url)}
   {/each}
 </div>
 
 <style>
   .link {
-    width: 90%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    background-color: rgba(255, 255, 255, .09);
-    border-radius: .5rem;
-    color: black;
-    margin: .7rem;
-    padding: .5rem;
-  }
-
-  .link p {
-    color: var(--accent);
-    font-weight: bold;
-    margin: 0;
+  	@apply bg-slate-400;
+  	@apply dark:bg-slate-700;
+  	@apply mx-auto;
+  	@apply mt-4;
+  	@apply w-full;
+  	@apply flex;
+  	@apply flex-row;
+  	@apply items-center;
+  	@apply justify-between;
+  	@apply p-4;
+  	@apply rounded;
   }
 
   .link form {
     width: unset;
-  }
-
-  .link button {
-  	margin: 0;
   }
 </style>

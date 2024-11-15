@@ -1,3 +1,41 @@
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+
+body, html {
+	@apply bg-white;
+	@apply dark:bg-slate-950;
+	@apply text-black;
+	@apply dark:text-slate-300;
+}
+
+.container {
+	@apply bg-slate-300;
+	@apply dark:bg-slate-800;
+	@apply text-center;
+	@apply p-4;
+	@apply mt-8;
+	@apply w-4/5;
+	@apply max-w-3xl;
+	@apply mx-auto;
+	@apply rounded-xl;
+}
+
+h1 {
+	@apply text-black;
+	@apply dark:text-white;
+	@apply text-2xl;
+	@apply my-2;
+	@apply font-bold;
+}
+
+a {
+	@apply text-purple-600;
+	@apply dark:text-purple-400;
+	@apply font-bold;
+}
+
+a:hover {
+	@apply text-purple-800;
+	@apply dark:text-purple-200;
+}
