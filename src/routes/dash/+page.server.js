@@ -49,7 +49,9 @@ export const actions = {
 		var data = {
 			name: d.get('name'),
 			'url': d.get('url'),
-			hid: d.get('hid') ?? null
+			hid: d.get('hid') ?? null,
+			description: d.get('description'),
+			visible: d.get('visible')
 		}
 
 		if(!data.name) return fail(400, {
@@ -101,8 +103,10 @@ export const actions = {
 		var d = await request.formData();
 		var hid = d.get('oldhid');
 
+		console.log(d.get('visible'));
+
 		try {
-			var req = await fetch(`/api/links/${oldhid}`, {
+			var req = await fetch(`/api/links/${hid}`, {
 				headers: {
 					'Authorization': u
 				},
@@ -150,8 +154,8 @@ export const actions = {
 			return fail(500, {
 				success: false,
 				action: 'create',
-				status: e.response?.status ?? 500,
-				message: e.response?.data || "Internal error"
+				status: 500,
+				message: "Internal error"
 			})
 		}
 

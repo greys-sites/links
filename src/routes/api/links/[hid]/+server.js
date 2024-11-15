@@ -7,14 +7,18 @@ export async function PATCH({ request, params, locals }) {
 	var link = await Links.get(params.hid);
 	if(!link) return error(404, "Link not found.");
 
-	var fd = await request.json();
-	var name = fd.name ?? link.name;
-	var hid = fd.hid ?? link.hid;
-	var url = fd.url ?? link.url;
+	var fd = await request.formData();
+	var name = fd.get("name") ?? link.name;
+	var hid = fd.get("hid") ?? link.hid;
+	var url = fd.get("url") ?? link.url;
+	var description = fd.get("description");
+	var visible = fd.get("visible") == "public" ? true : false;
 
 	link.name = name;
 	link.hid = hid;
 	link.url = url;
+	link.description = description;
+	link.visible = visible;
 
 	await link.save();
 

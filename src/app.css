@@ -39,3 +39,38 @@ a:hover {
 	@apply text-purple-800;
 	@apply dark:text-purple-200;
 }
+
+.link {
+	@apply bg-slate-400;
+	@apply dark:bg-slate-700;
+	@apply mx-auto;
+	@apply mt-4;
+	@apply w-full;
+	@apply flex;
+	@apply flex-col;
+	@apply items-center;
+	@apply justify-between;
+	@apply p-4;
+	@apply rounded;
+}
+
+.link .inner {
+	@apply w-full;
+	@apply flex;
+	@apply flex-row;
+	@apply items-center;
+	@apply justify-between;
+}
+
+.link .desc {
+	@apply w-full;
+	@apply flex;
+	@apply flex-col;
+	@apply items-start;
+	@apply justify-between;
+	@apply text-left;
+}
+
+.link form {
+  width: unset;
+}

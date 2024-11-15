@@ -8,13 +8,17 @@ export async function POST({ request, locals }) {
 
 	var fd = await request.json();
 	var url = fd.url;
-	var hid = fd.hid;
+	var hid = fd.hid?.length ? fd.hid :  null;
 	var name = fd.name;
+	var description = fd.description;
+	var visible = fd.visible == "public" ? true : false;
 
 	var created = await Links.create({
 		url,
 		name,
-		hid
+		hid,
+		description,
+		visible
 	});
 
 	return json({ created });

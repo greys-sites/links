@@ -18,10 +18,12 @@ const pool = new pg.Pool({
 async function setup() {
 	await pool.query(`
 		CREATE TABLE IF NOT EXISTS links (
-			id		SERIAL PRIMARY KEY,
-			hid 	TEXT UNIQUE,
-			url		TEXT,
-			name 	TEXT
+			id			SERIAL PRIMARY KEY,
+			hid 		TEXT UNIQUE,
+			url			TEXT,
+			name 		TEXT,
+			description TEXT,
+			visible		BOOLEAN
 		);
 
 		CREATE TABLE IF NOT EXISTS stats (

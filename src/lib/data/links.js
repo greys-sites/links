@@ -7,7 +7,9 @@ const KEYS = {
 	id: { },
 	hid: { },
 	name: { patch: true },
-	url: { patch: true }
+	url: { patch: true },
+	description: { patch: true },
+	visible: { patch: true }
 }
 
 class Link extends DataObject {
@@ -32,15 +34,18 @@ class LinkStore extends DataStore {
 	}
 
 	async create(data = {}) {
+		console.log(data);
 		try {
 			var c = await this.db.query(`
 				INSERT INTO links (
 					hid,
 					url,
-					name
-				) VALUES ((select coalesce($1,find_unique('links'))), $2, $3)
+					name,
+					description,
+					visible
+				) VALUES ((select coalesce($1,find_unique('links'))), $2, $3, $4, $5)
 				RETURNING id
-			`, [data.hid, data.url, data.name]);
+			`, [data.hid, data.url, data.name, data.description, data.visible]);
 		} catch(e) {
 			console.log(e);
 			return Promise.reject(e);
