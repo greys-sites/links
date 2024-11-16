@@ -2,14 +2,24 @@
 	import "../app.css";
 
 	import {
-		DarkMode
-	} from 'flowbite-svelte';
+		settings,
+		update
+	} from '$lib/stores/settings';
 
 	import { toasts } from '$lib/stores/toasts';
 	import Toast from '$lib/components/toast.svelte';
 
-	/** @type {{children?: import('svelte').Snippet}} */
-	let { children } = $props();
+	import {
+		Button
+	} from 'flowbite-svelte';
+
+	import Dark from '~icons/ic/round-dark-mode';
+	import Light from '~icons/ic/round-light-mode';
+	import Auto from '~icons/ic/round-auto-mode';
+
+	let { children, data } = $props();
+
+	let theme = $derived($settings.get('theme'));
 </script>
 
 <svelte:head>
@@ -29,8 +39,32 @@
 	<a href="/">home</a>
 	<p>|</p>
 	<a href="/links">links</a>
+	{#if data.verified}
+		<p>|</p>
+		<a href="/dash">dash</a>
+		<p>|</p>
+		<a href="/stats">stats</a>
+	{/if}
 	<div class="ml-auto">
-		<DarkMode />
+		{#if theme == 'dark'}
+			<Button
+				color="alternative"
+				size="sm"
+				class="border-0"
+				onclick={() => update('theme', 'light')}
+			>
+				<Light />
+			</Button>
+		{:else}
+			<Button
+				color="alternative"
+				size="sm"
+				class="border-0"
+				onclick={() => update('theme', 'dark')}
+			>
+				<Dark />
+			</Button>
+		{/if}
 	</div>
 </nav>
 

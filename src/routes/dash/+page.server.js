@@ -1,6 +1,4 @@
 import { redirect, fail } from '@sveltejs/kit';
-import Links from '$lib/data/links';
-import Tokens from '$lib/data/tokens';
 
 export async function load({ locals, cookies, fetch }) {
 	if(!locals.verified) {

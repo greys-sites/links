@@ -1,6 +1,8 @@
 import { DataStore, DataObject } from './__models';
 import pool from './__db';
 
+import { formatDate } from '$lib/utils';
+
 const KEYS = {
 	id: { },
 	lid: { },
@@ -52,8 +54,9 @@ class StatStore extends DataStore {
 		if(d.rows?.[0]) {
 			var stats = { };
 			for(var stat of stats) {
-				if(!stats[stat.date]) stats[stat.date] = 0;
-				stats[stat.date] += 1;
+				let dt = stat.date.toISOString();
+				if(!stats[dt]) stats[dt] = 0;
+				stats[dt] += 1;
 			}
 			return stats;
 		} else return {};
@@ -72,9 +75,10 @@ class StatStore extends DataStore {
 		if(d.rows?.[0]) {
 			var stats = { };
 			for(var stat of d.rows) {
+				let dt = (stat.date.toISOString());
 				if(!stats[stat.lid]) stats[stat.lid] = { count: 0, dates: { } };
-				if(!stats[stat.lid].dates[stat.date]) stats[stat.lid].dates[stat.date] = 0;
-				stats[stat.lid].dates[stat.date] += 1;
+				if(!stats[stat.lid].dates[dt]) stats[stat.lid].dates[dt] = 0;
+				stats[stat.lid].dates[dt] += 1;
 				stats[stat.lid].count += 1;
 			}
 			

@@ -26,7 +26,7 @@ export async function PATCH({ request, params, locals }) {
 }
 
 export async function GET({ params, locals }) {
-	if(!locals?.verified) return [];
+	// if(!locals?.verified) return [];
 
 	var link = await Links.get(params.hid);
 	if(!link) return error(404, "Link not found.");
