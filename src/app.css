@@ -14,7 +14,7 @@ body, html {
 	@apply dark:bg-slate-800;
 	@apply text-center;
 	@apply p-4;
-	@apply mt-8;
+	@apply my-8;
 	@apply w-4/5;
 	@apply max-w-3xl;
 	@apply mx-auto;
