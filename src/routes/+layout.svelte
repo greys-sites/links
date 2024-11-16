@@ -46,7 +46,7 @@
 
 <style lang="postcss">
 	nav {
-		@apply bg-slate-300;
+		@apply bg-slate-200;
 		@apply dark:bg-slate-800;
 		@apply text-black;
 		@apply dark:text-white;

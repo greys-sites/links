@@ -31,7 +31,7 @@
 {/snippet}
 
 <div class="container">
-  <h1>Important Links</h1>
+  <h1>Public Links</h1>
   {#if data?.links?.length}
     {#each data.links as link}
       {@render Link(link)}

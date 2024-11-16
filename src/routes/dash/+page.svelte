@@ -2,6 +2,7 @@
  	import { add } from '$lib/stores/toasts';
 	import { enhance } from '$app/forms';
 	import Toast from '$lib/components/toast.svelte';
+	import Link from '$lib/components/link.svelte';
 
 	import {
 		Label,
@@ -23,7 +24,7 @@
 	let open = $state(false);
 
 	let edit = $state(false);
-	let editing = $state( null);
+	let editing = $state(null);
 
 	$effect(() => {
 	    if(form) {
@@ -52,33 +53,11 @@
 		open = true;
 	}
 
-	let setEdit = (e, itm) => {
+	let setEdit = (itm) => {
 		editing = itm;
 		edit = true;
 	}
 </script>
-
-{#snippet Link(link)}
-	<div class="link">
-		<div class="inner">
-			<a href="/{link.hid}" target="_blank">{link.hid}</a>
-			<a href={link.url} target="_blank">{link.name}</a>
-			<form method="POST" action="?/del" use:enhance>
-				<input type="text" value={link.hid} name="hid" hidden />
-				<Button type="submit" size="xs">
-					<Delete />
-				</Button>
-				<Button onclick={(e) => setEdit(e, link)} size="xs">
-					<Edit />
-				</Button>
-			</form>
-		</div>
-		<div class="desc">
-			<Helper>{link.description ?? "No description."}</Helper>
-			<Helper>This link is { link.visible ? "public" : "private" }.</Helper>
-		</div>
-	</div>
-{/snippet}
 
 <svelte:head>
   <title>Dash | gsdn.link</title>
@@ -160,10 +139,8 @@
 
 {#if data?.links?.length}
 	<div class="container">
-	  {#each data.links as link}
-	  	{@render Link(
-	  		link
-	  	)}
+	  {#each data.links as link (link.hid)}
+	  	<Link {link} {setEdit} />
 	  {/each}
 	</div>
 {:else}

@@ -10,7 +10,7 @@ body, html {
 }
 
 .container {
-	@apply bg-slate-300;
+	@apply bg-slate-200;
 	@apply dark:bg-slate-800;
 	@apply text-center;
 	@apply p-4;
@@ -41,7 +41,7 @@ a:hover {
 }
 
 .link {
-	@apply bg-slate-400;
+	@apply bg-slate-300;
 	@apply dark:bg-slate-700;
 	@apply mx-auto;
 	@apply mt-4;
@@ -71,6 +71,6 @@ a:hover {
 	@apply text-left;
 }
 
-.link form {
+.link .btns {
   width: unset;
 }
