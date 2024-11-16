@@ -29,8 +29,6 @@
 	<a href="/">home</a>
 	<p>|</p>
 	<a href="/links">links</a>
-	<p>|</p>
-	<a href="/dash">dash</a>
 	<div class="ml-auto">
 		<DarkMode />
 	</div>
