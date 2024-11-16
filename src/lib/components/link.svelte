@@ -45,6 +45,9 @@
 	</div>
 	<div class="desc">
 		<Helper>{link.description ?? "No description."}</Helper>
-		<Helper>This link is { link.visible ? "public" : "private" }.</Helper>
+		<Helper>
+			This link is { link.visible ? "public" : "private" } |{" "}
+			Clicked <a href="/stats/{link.hid}">{link.stats.count ?? 0} times</a>.
+		</Helper>
 	</div>
 </div>
