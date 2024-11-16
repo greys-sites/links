@@ -36,7 +36,7 @@
 <div class="container">
 	<form method="POST" action="?/login" use:enhance>
 		<Label for="token">Token</Label>
-		<Input type="text" placeholder="token" name="token" id="token" />
+		<Input type="password" placeholder="token" name="token" id="token" />
 		<Button type="submit">Submit</Button>
 	</form>
 </div>

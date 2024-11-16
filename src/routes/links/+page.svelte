@@ -1,20 +1,42 @@
+<script>
+  import {
+    Label,
+    Input,
+    Textarea,
+    Button,
+    Modal,
+    Toggle,
+    Helper,
+    SpeedDial
+  } from 'flowbite-svelte';
+
+  let { data } = $props();
+</script>
+
 <svelte:head>
   <title>Links | gsdn.link</title>
 </svelte:head>
 
+{#snippet Link(link)}
+  <div class="link">
+    <div class="inner">
+      <a href="/{link.hid}" target="_blank">{link.name}</a>
+    </div>
+    {#if link.description}
+      <div class="desc">
+        <Helper>{link.description}</Helper>
+      </div>
+    {/if}
+  </div>
+{/snippet}
+
 <div class="container">
-<h1>Important Links</h1>
-<a href="https://github.com/greysdawn" target="_blank">main github</a>
-<br>
-<a href="https://twitter.com/greysdawn" target="_blank">projects twitter</a>
-<br>
-<a href="https://discord.gg/EvDmXGt" target="_blank">bot support server</a>
-<br>
-<a href="https://discord.gg/3y228CvJyQ" target="_blank">content server</a>
-<br>
-<a href="https://patreon.com/greysdawn" target="_blank">patreon</a>
-<br>
-<a href="https://ko-fi.com/greysdawn" target="_blank">ko-fi</a>
-<br>
-<a href="https://twitch.tv/greysdawn" target="_blank">twitch</a>
+  <h1>Important Links</h1>
+  {#if data?.links?.length}
+    {#each data.links as link}
+      {@render Link(link)}
+    {/each}
+  {:else}
+    <p>No links are here yet.</p>
+  {/if}
 </div>
