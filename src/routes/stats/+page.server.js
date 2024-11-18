@@ -55,10 +55,15 @@ export async function load({ locals, cookies, fetch, url }) {
 		}
 	}
 
-	console.log(links[0].stats);
+	console.log(links);
 
 	let arranged = [];
 	for(var link of links) {
+		if(Array.isArray(link.stats)) link.stats = {
+			count: 0,
+			dates: []
+		}
+
 		let mapped = [];
 		for(var day of days) {
 			mapped.push(link.stats.dates[day] ?? 0)
