@@ -86,6 +86,23 @@ class StatStore extends DataStore {
 		} else return {};
 	}
 
+	async getBetween(from, to) {
+		try {
+			var d = await this.db.query(`
+				select * from stats where
+				date >= $1 and
+				date <= $2
+			`, [from, to]);
+		} catch(e) {
+			console.log(e);
+			return Promise.reject(e);
+		}
+
+		if(d.rows?.[0]) {
+			return d.rows;
+		} else return {};
+	}
+
 	async getID(id) {
 		try {
 			var d = await this.db.query(`

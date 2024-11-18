@@ -1,24 +1,46 @@
 import { redirect, fail } from '@sveltejs/kit';
+import { subDays, eachDayOfInterval } from 'date-fns';
 
-import { subDays, addDays, eachDayOfInterval } from 'date-fns';
-import { formatDate } from '$lib/utils';
-
-export async function load({ locals, cookies, fetch }) {
+export async function load({ locals, cookies, fetch, url }) {
 	if(!locals.verified) {
 		redirect(308, '/login');
 	}
 	var u = cookies.get('user');
 
+	let today = new Date();
+	var query = {
+		from: url.searchParams.get('from') ?? subDays(today, 30),
+		to: url.searchParams.get('to') ?? today,
+	}
+
+	let days = eachDayOfInterval({
+		start: query.from,
+		end: query.to
+	})
+	days = days.map((d) => d.toISOString());
+	
+	var params = new URLSearchParams();
+	params.set('from', query.from);
+	params.set('to', query.to);
+
 	var stats = [];
+	var links = [];
 
 	var d;
 	try {
-		var r = await fetch('/api/stats', {
+		var r = await fetch(`/api/stats?${params.toString()}`, {
 			headers: {
 				'Authorization': u
 			}
 		})
 		if(r) stats = await r.json();
+
+		r = await fetch(`/api/links`, {
+			headers: {
+				'Authorization': u
+			}
+		})
+		if(r) links = await r.json();
 	} catch(e) {
 		console.log(e.response ?? e);
 		switch(e.response?.status) {
@@ -33,47 +55,20 @@ export async function load({ locals, cookies, fetch }) {
 		}
 	}
 
-	console.log(stats);
+	console.log(links[0].stats);
 
-	var mapped = new Map();
-	var total = 0;
-
-	for(let set in stats) {
-		let st = stats[set];
-		total += st.count;
-		
-		let dates = Object.keys(st.dates);
-		for(var date of dates) {
-			let entry = mapped.get(date)
-			if(entry) {
-				entry.count += st.dates[date];
-				entry.links.add(set);
-			} else mapped.set(date, {
-				count: st.dates[date],
-				links: new Set([set])
-			})
-		}
-	}
-
-	let today = new Date();
-	let days = eachDayOfInterval({
-		start: subDays(today, 30),
-		end: today
-	})
-	days = days.map(d => d.toISOString());
-	console.log(days);
 	let arranged = [];
-	for(var d of days) {
-		let data = mapped.get(d);
+	for(var link of links) {
+		let mapped = [];
+		for(var day of days) {
+			mapped.push(link.stats.dates[day] ?? 0)
+		}
+
 		arranged.push({
-			date: d,
-			count: data?.count ?? 0,
-			links: data?.links ? Array.from(data.links) : []
+			...link,
+			stats: mapped
 		})
-			
 	}
 
-	console.log(arranged);
-
-	return { stats, arranged };
+	return { stats, links: arranged };
 }

@@ -21,6 +21,6 @@ export async function load({ cookies, params, fetch }) {
 		});
 	}
 
-	if(req?.url) redirect(308, req.url);
+	if(req?.url) redirect(307, req.url);
 	else error(404, "Link not found.");
 }

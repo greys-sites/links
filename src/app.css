@@ -74,3 +74,9 @@ a:hover {
 .link .btns {
   width: unset;
 }
+
+.link.selected {
+	@apply border-2;
+	@apply border-solid;
+	@apply border-purple-400;
+}
