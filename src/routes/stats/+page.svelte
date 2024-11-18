@@ -6,7 +6,8 @@
 	import LineChart from '$lib/components/lineChart.svelte';
 
 	import {
-		Datepicker
+		Datepicker,
+		Helper
 	} from 'flowbite-svelte';
 
 	let { data } = $props();
