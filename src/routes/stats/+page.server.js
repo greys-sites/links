@@ -55,8 +55,6 @@ export async function load({ locals, cookies, fetch, url }) {
 		}
 	}
 
-	console.log(links);
-
 	let arranged = [];
 	for(var link of links) {
 		if(Array.isArray(link.stats)) link.stats = {
